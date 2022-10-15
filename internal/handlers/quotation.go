@@ -16,10 +16,10 @@ func NewQuotation(quotationService *services.QuotationService) *QuotationHandler
 	}
 }
 
-func (quotationHandler QuotationHandler) GetQuote(symbol string) error {
-	err := quotationHandler.QuotationService.GetQuote(symbol)
+func (quotationHandler QuotationHandler) GetQuote(symbol string) (*float32, error) {
+	quotation, err := quotationHandler.QuotationService.GetQuote(symbol)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return quotation, nil
 }

@@ -3,7 +3,6 @@ package services
 import (
 	"compress/gzip"
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 )
@@ -81,13 +80,13 @@ func NewQuotationService(httpClient *http.Client) *QuotationService {
 	}
 }
 
-func (quotationService QuotationService) GetQuote(symbol string) error {
+func (quotationService QuotationService) GetQuote(symbol string) (*float32, error) {
 
 	url := "https://query1.finance.yahoo.com/v8/finance/chart/USDBRL=X?region=US&lang=en-US&includePrePost=false&interval=2m&useYfid=true&range=1d&corsDomain=finance.yahoo.com&.tsrc=finance"
 
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	req.Header.Add("Accept", "*/*")
@@ -99,34 +98,28 @@ func (quotationService QuotationService) GetQuote(symbol string) error {
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	defer res.Body.Close()
 
 	// Check that the server actually sent compressed data
 	var reader io.ReadCloser
-	switch res.Header.Get("Content-Encoding") {
-	case "gzip":
-		reader, err = gzip.NewReader(res.Body)
-		if err != nil {
-			return err
-		}
-
-		var jsonData currencyData
-		err = json.NewDecoder(reader).Decode(&jsonData)
-		if err != nil {
-			return err
-		}
-
-		fmt.Println(jsonData.Chart.Result[0].Meta.Symbol)
-		fmt.Println(jsonData.Chart.Result[0].Meta.RegularMarketPrice)
-
-		defer reader.Close()
-	default:
-		reader = res.Body
+	reader, err = gzip.NewReader(res.Body)
+	if err != nil {
+		return nil, err
 	}
 
-	return nil
+	var jsonData currencyData
+	err = json.NewDecoder(reader).Decode(&jsonData)
+	if err != nil {
+		return nil, err
+	}
+
+	defer reader.Close()
+
+	price := float32(jsonData.Chart.Result[0].Meta.RegularMarketPrice)
+
+	return &price, nil
 
 }
