@@ -59,3 +59,4 @@ brews:
       zsh_completion.install "completions/goreleaser.zsh" => "_goreleaser"
       fish_completion.install "completions/goreleaser.fish"
       man1.install "manpages/goreleaser.1.gz"
+
