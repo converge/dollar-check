@@ -1,4 +1,4 @@
-### Dollar Check
+### Dollar Check 123
 
 [![codecov](https://codecov.io/gh/converge/dollar-check/branch/main/graph/badge.svg?token=P1ERPECHBN)](https://codecov.io/gh/converge/dollar-check)
 
