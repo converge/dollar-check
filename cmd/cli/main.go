@@ -10,6 +10,7 @@ import (
 	"time"
 )
 
+// Config ok..
 type Config struct {
 	target float32
 }
