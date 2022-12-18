@@ -8,7 +8,7 @@ import (
 
 func TestNewQuotationService(t *testing.T) {
 
-	var quotationService *QuotationService
+	var quotationService QuotationService
 
 	type args struct {
 		httpClient *http.Client
@@ -21,7 +21,7 @@ func TestNewQuotationService(t *testing.T) {
 		{
 			name: "ok1",
 			args: args{},
-			want: quotationService,
+			want: &quotationService,
 		},
 	}
 	for _, tt := range tests {
