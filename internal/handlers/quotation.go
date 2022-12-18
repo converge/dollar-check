@@ -5,9 +5,7 @@ import (
 )
 
 type QuotationHandler struct {
-	symbol            string
-	regularMarketTime float32
-	QuotationService  services.QuotationService
+	QuotationService services.QuotationService
 }
 
 func NewQuotation(quotationService *services.QuotationService) *QuotationHandler {
