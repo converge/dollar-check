@@ -28,6 +28,9 @@ func (service TelegramService) SendMessage(text string) error {
 		"chat_id": service.ChatId,
 		"text":    text,
 	})
+	if err != nil {
+		return err
+	}
 	url := fmt.Sprintf("https://api.telegram.org/bot%s/sendMessage", service.BotToken)
 	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(requestBody))
 	if err != nil {

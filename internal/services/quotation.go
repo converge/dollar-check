@@ -20,7 +20,6 @@ type currencyData struct {
 				ExchangeName         string  `json:"exchangeName"`
 				InstrumentType       string  `json:"instrumentType"`
 				FirstTradeDate       int     `json:"firstTradeDate"`
-				RegularMarketTime    int     `json:"regularMarketTime"`
 				Gmtoffset            int     `json:"gmtoffset"`
 				Timezone             string  `json:"timezone"`
 				ExchangeTimezoneName string  `json:"exchangeTimezoneName"`
